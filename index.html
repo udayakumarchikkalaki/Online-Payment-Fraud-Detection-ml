@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPI Fraud Detection System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-2 d-md-block bg-dark sidebar">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" data-tab="fraud-check">
+                                <i class="bi bi-shield-check"></i> Fraud Check
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-tab="transaction-history">
+                                <i class="bi bi-list-ul"></i> Transaction History
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-tab="analytics">
+                                <i class="bi bi-graph-up"></i> Analytics
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-10 ms-sm-auto px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">UPI Advanced Fraud Detection System</h1>
+                </div>
+
+                <!-- Fraud Check Tab -->
+                <div id="fraud-check" class="tab-content active">
+                    <div class="card">
+                        <div class="card-header">
+                            Comprehensive Fraud Check
+                        </div>
+                        <div class="card-body">
+                            <form id="fraud-check-form">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="transaction_id" class="form-label">Transaction ID</label>
+                                        <input type="text" class="form-control" id="transaction_id" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="user_id" class="form-label">User ID</label>
+                                        <input type="text" class="form-control" id="user_id" required>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="upi_id" class="form-label">UPI ID</label>
+                                        <input type="text" class="form-control" id="upi_id" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="device_type" class="form-label">Device Type</label>
+                                        <select class="form-select" id="device_type">
+                                            <option value="mobile">Mobile</option>
+                                            <option value="tablet">Tablet</option>
+                                            <option value="desktop">Desktop</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="app" class="form-label">Payment App</label>
+                                        <select class="form-select" id="app">
+                                            <option value="Google Pay">Google Pay</option>
+                                            <option value="PhonePe">PhonePe</option>
+                                            <option value="Paytm">Paytm</option>
+                                            <option value="Amazon Pay">Amazon Pay</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="amount" class="form-label">Transaction Amount</label>
+                                        <input type="number" class="form-control" id="amount" required>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="transaction_datetime" class="form-label">Transaction Date/Time</label>
+                                        <input type="datetime-local" class="form-control" id="transaction_datetime" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="location" class="form-label">Location</label>
+                                        <input type="text" class="form-control" id="location">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="login_attempts" class="form-label">Login Attempts</label>
+                                        <input type="number" class="form-control" id="login_attempts" min="0">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="past_day_transactions" class="form-label">Past Day Transactions</label>
+                                        <input type="number" class="form-control" id="past_day_transactions" min="0">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="past_week_transactions" class="form-label">Past Week Transactions</label>
+                                        <input type="number" class="form-control" id="past_week_transactions" min="0">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <button type="button" id="generate-data-btn" class="btn btn-secondary">
+                                            <i class="bi bi-clipboard-data"></i> Generate Sample Data
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <button type="button" id="check-fraud-btn" class="btn btn-primary">
+                                            <i class="bi bi-shield-check"></i> Check for Fraud
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div id="fraud-result" class="mt-3"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transaction History Tab -->
+                <div id="transaction-history" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            Transaction History
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped" id="transactions-table">
+                                <thead>
+                                    <tr>
+                                        <th>Transaction ID</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Fraud Probability</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactions-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Tab -->
+                <div id="analytics" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            Fraud Analytics
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="card text-center">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Total Transactions</h5>
+                                            <p id="total-transactions" class="card-text display-4">0</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card text-center">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Fraudulent Transactions</h5>
+                                            <p id="total-fraud" class="card-text display-4">0</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card text-center">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Fraud Percentage</h5>
+                                            <p id="fraud-percentage" class="card-text display-4">0%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
