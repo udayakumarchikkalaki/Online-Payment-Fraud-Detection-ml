@@ -4,4 +4,4 @@ Online Payment Fraud Detection Using Machine Learning is a data-driven project t
 
 Key Skills: Python, Machine Learning, Data Analysis, Pandas, NumPy, Scikit-learn, Data Visualization, Predictive Modeling.
 
-(https://github.com/udayakumarchikkalaki/Online-Payment-Fraud-Detection-ml/blob/main/Snapshot%20of%20online%20payment%20fraud%20detection.png)
+Example --![Preview](https://github.com/udayakumarchikkalaki/Online-Payment-Fraud-Detection-ml/blob/main/Snapshot%20of%20online%20payment%20fraud%20detection.png)
